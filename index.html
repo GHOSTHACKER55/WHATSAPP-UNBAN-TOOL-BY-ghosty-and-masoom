@@ -6,13 +6,29 @@
 <title>Ghosty WhatsApp Unban Tool</title>
 
 <style>
+    /* --- General Styles --- */
+    *{margin:0;padding:0;box-sizing:border-box}
+    html,body{width:100%;height:100%;color: white;font-family: Arial, sans-serif;overflow-x:hidden;}
+    
+    /* --- Video Background and Overlay --- */
+    .video-bg{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:-2;opacity: 0.7;}
+    .overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);z-index:-1;}
     body {
-        font-family: Arial, sans-serif;
-        background: linear-gradient(135deg, #0b1f3a, #092647, #0d335d);
-        color: white;
         padding: 20px;
         text-align: center;
+        /* Remove original body background gradient */
+        background: transparent !important; 
     }
+
+    /* --- Splash Screen & Start Button (New Addition) --- */
+    .splash-screen{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.95);display:flex;justify-content:center;align-items:center;z-index:1000;}
+    .splash-screen.hidden{display:none}
+    .start-btn{padding:18px 50px;font-size:22px;font-weight:bold;background:linear-gradient(135deg, #4aa8ff, #0d335d); /* Blue Gradient */ color:#fff;border:none;border-radius:50px;cursor:pointer;box-shadow: 0 0 20px rgba(74, 168, 255, 0.5);transition: transform 0.2s;}
+    .start-btn:active{transform:scale(0.95);}
+
+    /* --- Main Container --- */
+    .main-app {display:none; width:100%; height:100%;}
+    .main-app.active {display:block;}
 
     .container {
         width: 90%;
@@ -22,6 +38,8 @@
         padding: 20px;
         border-radius: 14px;
         backdrop-filter: blur(10px);
+        position: relative; /* Ensure it stays above z-index 0 */
+        z-index: 10;
     }
 
     h1 {
@@ -36,6 +54,9 @@
         border-radius: 8px;
         border: none;
         font-size: 16px;
+        /* Style for inputs over dark background */
+        background-color: rgba(255,255,255,0.9);
+        color: #0d335d; 
     }
 
     .btn {
@@ -69,45 +90,64 @@
 </head>
 <body>
 
-<!-- 🎵 BACKGROUND MUSIC (WORKING LINK ADDED) -->
-<audio id="bgmusic" autoplay loop>
+<audio id="bgmusic" loop>
     <source src="https://n.uguu.se/MJNQlpkz.mp4" type="audio/mp4">
 </audio>
 
-<script>
-// Mobile fix: play after first tap
-document.addEventListener("click", function () {
-    document.getElementById("bgmusic").play();
-});
-</script>
-<!-- 🎵 END BACKGROUND MUSIC -->
+<video class="video-bg" id="videoBg" autoplay loop muted playsinline>
+    <source src="https://raw.githubusercontent.com/faizankhanchang22-gif/Fauzuna/0d8386c8d7fa219d8a3390a01ba59402d7b31dab/AQPYKYVB-nMO-Ray4szZJNQQ3QMxLMzxeRYxOgW2bFyfnEB9m7qPgNqa0mY7l9gcciWi1SarcQgjp0Jk6Ttxa24kVYMMqMFOyUCWh5o.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+<div class="overlay"></div>
+<div class="splash-screen" id="splashScreen">
+    <button class="start-btn" onclick="startApp()">START GHOSTY TOOL 👻</button>
+</div>
+<div class="main-app" id="mainApp">
+    <div class="container">
+        <h1>Ghosty WhatsApp Unban Tool</h1>
 
-<div class="container">
-    <h1>Ghosty WhatsApp Unban Tool</h1>
+        <label>Your WhatsApp Number:</label>
+        <input type="text" id="number" placeholder="+923001234567">
 
-    <label>Your WhatsApp Number:</label>
-    <input type="text" id="number" placeholder="+923001234567">
+        <label>Select Your Report Style:</label>
+        <select id="prompt">
+            <option value="1">Normal Unban – Prompt 1</option>
+            <option value="2">Normal Unban – Prompt 2</option>
+            <option value="3">Normal Unban – Prompt 3</option>
+            <option value="4">Normal Unban – Prompt 4</option>
+            <option value="5">Normal Unban – Prompt 5</option>
+            <option value="6">Normal Unban – Prompt 6</option>
+        </select>
 
-    <label>Select Your Report Style:</label>
-    <select id="prompt">
-        <option value="1">Normal Unban – Prompt 1</option>
-        <option value="2">Normal Unban – Prompt 2</option>
-        <option value="3">Normal Unban – Prompt 3</option>
-        <option value="4">Normal Unban – Prompt 4</option>
-        <option value="5">Normal Unban – Prompt 5</option>
-        <option value="6">Normal Unban – Prompt 6</option>
-    </select>
+        <button class="btn" onclick="sendReport()">Generate Report</button>
 
-    <button class="btn" onclick="sendReport()">Generate Report</button>
-
-    <div class="group-btn">
-        <a href="https://chat.whatsapp.com/CPQC5IGJA2m8iaOWOE8CAN?mode=hqrt1" target="_blank">
-            Join Our WhatsApp Group
-        </a>
+        <div class="group-btn">
+            <a href="https://chat.whatsapp.com/CPQC5IGJA2m8iaOWOE8CAN?mode=hqrt1" target="_blank">
+                Join Our WhatsApp Group
+            </a>
+        </div>
     </div>
 </div>
-
 <script>
+function startApp(){
+    document.getElementById("splashScreen").classList.add("hidden");
+    document.getElementById("mainApp").classList.add("active");
+    
+    let video = document.getElementById("videoBg");
+    let audio = document.getElementById("bgmusic");
+    
+    // Play video (mute required for immediate autoplay)
+    video.play().catch(e => {
+        console.warn("Video Autoplay blocked:", e.name);
+    }); 
+
+    // Play audio (This will only work if triggered by user tap/click, which the start button handles)
+    audio.volume = 0.5; // Set volume lower so it's not too loud
+    audio.play().catch(e => {
+        console.warn("Audio Autoplay blocked:", e.name);
+    }); 
+}
+
 function sendReport() {
     const number = document.getElementById('number').value.trim();
     const p = document.getElementById('prompt').value;
