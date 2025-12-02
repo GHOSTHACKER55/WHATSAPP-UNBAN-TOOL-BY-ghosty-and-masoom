@@ -8,58 +8,79 @@
 <style>
     body {
         font-family: Arial, sans-serif;
-        background: #f4f4f4;
+        background: linear-gradient(135deg, #0a0f24, #14203b, #0e1a33);
+        background-size: cover;
+        color: white;
         padding: 20px;
     }
+
     .container {
         max-width: 500px;
         margin: auto;
-        background: white;
+        background: rgba(255,255,255,0.08);
         padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        border-radius: 12px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.4);
     }
+
     h1 {
         text-align: center;
+        color: #40a6ff;
     }
+
     label {
-        font-weight: bold;
-        margin-top: 10px;
         display: block;
+        margin-top: 15px;
+        font-weight: bold;
     }
+
     input, select {
         width: 100%;
         padding: 12px;
-        margin-top: 5px;
+        margin-top: 6px;
         border-radius: 8px;
-        border: 1px solid #ccc;
+        border: none;
         font-size: 16px;
     }
+
     button {
+        margin-top: 20px;
+        padding: 14px;
         width: 100%;
-        padding: 12px;
-        background: #4aa8ff;
+        background: #40a6ff;
         color: white;
         border: none;
-        margin-top: 15px;
         border-radius: 8px;
+        font-size: 18px;
+        font-weight: bold;
         cursor: pointer;
-        font-size: 17px;
     }
-    .group-btn a {
-        display: block;
+
+    button:hover {
+        opacity: 0.85;
+    }
+
+    .group-btn {
+        margin-top: 20px;
         text-align: center;
+    }
+
+    .group-btn a {
+        text-decoration: none;
+        padding: 12px 20px;
         background: #28a745;
-        padding: 12px;
         color: white;
         border-radius: 8px;
-        margin-top: 20px;
-        text-decoration: none;
         font-size: 17px;
+        display: inline-block;
+    }
+
+    .group-btn a:hover {
+        opacity: 0.85;
     }
 </style>
-
 </head>
+
 <body>
 
 <div class="container">
@@ -68,14 +89,20 @@
     <label>Your WhatsApp Number:</label>
     <input type="text" id="number" placeholder="+923001234567">
 
-    <label>Select Normal Unban Report:</label>
+    <label>Select Unban Type:</label>
+    <select id="mode">
+        <option value="normal">Normal Unban</option>
+        <option value="permanent">Permanent Unban</option>
+    </select>
+
+    <label>Normal Unban Reports:</label>
     <select id="prompt">
-        <option value="1">Normal Unban - Report 1</option>
-        <option value="2">Normal Unban - Report 2</option>
-        <option value="3">Normal Unban - Report 3</option>
-        <option value="4">Normal Unban - Report 4</option>
-        <option value="5">Normal Unban - Report 5</option>
-        <option value="6">Normal Unban - Report 6</option>
+        <option value="1">Normal Report 1</option>
+        <option value="2">Normal Report 2</option>
+        <option value="3">Normal Report 3</option>
+        <option value="4">Normal Report 4</option>
+        <option value="5">Normal Report 5</option>
+        <option value="6">Normal Report 6</option>
     </select>
 
     <button onclick="sendReport()">Generate & Send Report</button>
@@ -90,41 +117,47 @@
 <script>
 function sendReport() {
     const number = document.getElementById("number").value.trim();
+    const mode = document.getElementById("mode").value;
     const prompt = document.getElementById("prompt").value;
 
     if (number === "") {
-        alert("Please enter your number.");
+        alert("Please enter your WhatsApp number.");
         return;
     }
 
     let message = "";
 
-    switch(prompt) {
-        case "1":
-            message = `Hello WhatsApp Support, my number ${number} was mistakenly banned. Kindly review and restore my access. Thank you.`;
-            break;
-        case "2":
-            message = `Dear WhatsApp team, my account ${number} got banned accidentally. Please help me recover it.`;
-            break;
-        case "3":
-            message = `Hi, I believe my number ${number} was wrongly banned. Requesting a quick reactivation.`;
-            break;
-        case "4":
-            message = `I am facing an issue as my number ${number} is banned. Kindly verify and unban it.`;
-            break;
-        case "5":
-            message = `To WhatsApp Support: Please check number ${number}, it appears to be banned without reason.`;
-            break;
-        case "6":
-            message = `My number ${number} got banned but I have not violated any terms. Please reinstate access.`;
-            break;
+    if (mode === "normal") {
+        switch(prompt) {
+            case "1":
+                message = `Hello WhatsApp Support, my number ${number} was mistakenly banned. Kindly review and restore my access. Thank you.`;
+                break;
+            case "2":
+                message = `Dear WhatsApp team, my account ${number} got banned accidentally. Please help me recover it.`;
+                break;
+            case "3":
+                message = `Hi, I believe my number ${number} was wrongly banned. Requesting a quick reactivation.`;
+                break;
+            case "4":
+                message = `I am facing an issue as my number ${number} is banned. Kindly verify and unban it.`;
+                break;
+            case "5":
+                message = `To WhatsApp Support: Please check number ${number}, it appears to be banned without reason.`;
+                break;
+            case "6":
+                message = `My number ${number} got banned but I have not violated any terms. Please reinstate access.`;
+                break;
+        }
+    } else {
+        message = `Dear WhatsApp Support Team,\n\nMy account ${number} is showing permanently banned. I request a review and restoration of my access.\nThank you.`;
     }
 
-    const email = "mailto:support@whatsapp.com"
-                + "?subject=" + encodeURIComponent("Unban Request")
-                + "&body=" + encodeURIComponent(message);
+    const mailtoLink =
+        "https://mail.google.com/mail/?view=cm&fs=1&to=support@whatsapp.com"
+        + "&su=" + encodeURIComponent("Request to Unban WhatsApp Number")
+        + "&body=" + encodeURIComponent(message);
 
-    window.location.href = email;
+    window.open(mailtoLink, "_blank");
 }
 </script>
 
