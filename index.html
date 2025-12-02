@@ -8,86 +8,96 @@
 <style>
     body {
         background: #000;
+        color: white;
         font-family: Arial, sans-serif;
-        color: #fff;
         padding: 20px;
-        text-align: center;
     }
 
     h1 {
-        font-size: 26px;
-        font-weight: bold;
+        text-align: center;
+        font-weight: 700;
+        letter-spacing: 2px;
         margin-bottom: 25px;
-        letter-spacing: 1px;
     }
 
     .box {
         background: #111;
         padding: 20px;
-        border-radius: 15px;
+        border-radius: 16px;
         max-width: 500px;
         margin: auto;
+        box-shadow: 0 0 25px #000;
     }
 
     label {
         display: block;
-        text-align: left;
-        margin-bottom: 7px;
+        margin-top: 15px;
+        margin-bottom: 5px;
         font-size: 15px;
-        opacity: 0.8;
+        color: #bbb;
     }
 
     select, input {
         width: 100%;
-        background: #1b1b1b;
+        padding: 13px;
+        border-radius: 12px;
         border: 1px solid #333;
+        background: #1a1a1a;
         color: white;
-        padding: 14px;
-        border-radius: 10px;
         font-size: 16px;
-        margin-bottom: 20px;
     }
 
-    select:focus, input:focus {
-        outline: none;
-        border-color: #555;
-    }
-
-    button {
+    .btn {
+        margin-top: 20px;
         width: 100%;
         padding: 14px;
-        border: none;
-        border-radius: 10px;
-        background: #444;
-        color: #fff;
-        font-size: 17px;
-        cursor: pointer;
-        font-weight: bold;
-    }
-
-    button:active {
-        opacity: 0.8;
-    }
-
-    .footer {
-        margin-top: 20px;
-        opacity: 0.7;
-        font-size: 14px;
-    }
-
-    .join-btn {
-        margin-top: 15px;
-        display: inline-block;
-        padding: 12px 20px;
         background: #222;
-        border-radius: 8px;
+        border: 1px solid #444;
+        border-radius: 12px;
         color: white;
-        text-decoration: none;
-        font-weight: bold;
+        font-size: 17px;
     }
+
+    /* Bottom Sheet */
+    .sheet {
+        position: fixed;
+        bottom: -100%;
+        left: 0;
+        width: 100%;
+        background: #1c1c1e;
+        border-radius: 20px 20px 0 0;
+        padding: 20px;
+        transition: 0.35s;
+        height: 55%;
+        overflow-y: auto;
+    }
+
+    .sheet.open {
+        bottom: 0;
+    }
+
+    .radio-row {
+        padding: 15px 10px;
+        background: #2a2a2c;
+        margin-bottom: 10px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .done-btn {
+        width: 100%;
+        padding: 14px;
+        margin-top: 10px;
+        background: #333;
+        color: white;
+        border-radius: 10px;
+        text-align: center;
+    }
+
 </style>
 </head>
-
 <body>
 
 <h1>WHATSAPP UNBAN TOOL</h1>
@@ -104,28 +114,97 @@
     <input type="text" id="number" placeholder="+923001234567">
 
     <label>Select Prompt</label>
-    <select id="prompt">
-        <option value="Prompt 1: Account Review Request">Prompt 1: Account Review Request</option>
-        <option value="Prompt 2: Mistaken Ban Appeal">Prompt 2: Mistaken Ban Appeal</option>
-        <option value="Prompt 3: First Appeal Request">Prompt 3: First Appeal Request</option>
-        <option value="Prompt 4: Strong Mistake Appeal">Prompt 4: Strong Mistake Appeal</option>
-        <option value="Prompt 5: Urgent Review Appeal">Prompt 5: Urgent Review Appeal</option>
-        <option value="Prompt 6: Final Chance Request">Prompt 6: Final Chance Request</option>
+    <select onclick="openSheet()" id="promptSelect">
+        <option selected>Select Prompt</option>
     </select>
 
-    <button onclick="sendUnban()">SEND UNBAN REQUEST</button>
+    <button class="btn" onclick="generate()">Send Unban Request</button>
+
+    <div id="result" style="white-space: pre-wrap; margin-top: 20px;"></div>
 
 </div>
 
-<div class="footer">
-    DEVELOPED BY GHOSTY | © 2025 | ALL SYSTEMS OPERATIONAL
-</div>
+<!-- Bottom Sheet -->
+<div class="sheet" id="sheet">
 
-<a href="#" class="join-btn">JOIN OUR WHATSAPP CHANNEL</a>
+    <div class="radio-row" onclick="choose(1)">
+        Prompt 1: Standard Unban Request
+    </div>
+
+    <div class="radio-row" onclick="choose(2)">
+        Prompt 2: Mistaken Ban Appeal
+    </div>
+
+    <div class="radio-row" onclick="choose(3)">
+        Prompt 3: Policy Compliance Promise
+    </div>
+
+    <div class="radio-row" onclick="choose(4)">
+        Prompt 4: Account Review Request
+    </div>
+
+    <div class="radio-row" onclick="choose(5)">
+        Prompt 5: Terms Violation Appeal
+    </div>
+
+    <div class="radio-row" onclick="choose(6)">
+        Prompt 6: Final Chance Request
+    </div>
+
+    <div class="done-btn" onclick="closeSheet()">Done</div>
+
+</div>
 
 <script>
-function sendUnban() {
-    alert("Your unban request has been generated successfully!");
+function openSheet() {
+    document.getElementById("sheet").classList.add("open");
+}
+
+function closeSheet() {
+    document.getElementById("sheet").classList.remove("open");
+}
+
+function choose(n) {
+    document.getElementById("promptSelect").innerHTML = "Prompt " + n;
+    closeSheet();
+}
+
+function generate() {
+    let number = document.getElementById("number").value.trim();
+    let prompt = document.getElementById("promptSelect").innerHTML;
+
+    if (number === "") {
+        alert("Please enter your number");
+        return;
+    }
+
+    let message = "";
+
+    if (prompt.includes("Prompt 1")) {
+        message = `Hello WhatsApp Support, my number ${number} was mistakenly banned. Kindly review and restore my access. Thank you.`;
+    }
+
+    if (prompt.includes("Prompt 2")) {
+        message = `Hello WhatsApp Team, my number ${number} has been wrongly banned. Please check again. I did not violate any policy.`;
+    }
+
+    if (prompt.includes("Prompt 3")) {
+        message = `Dear WhatsApp, my number ${number} was banned. I assure compliance with all policies. Please restore my account.`;
+    }
+
+    if (prompt.includes("Prompt 4")) {
+        message = `WhatsApp Support, kindly review my account ${number}. I believe the ban was accidental. Please unban it.`;
+    }
+
+    if (prompt.includes("Prompt 5")) {
+        message = `Hello WhatsApp, my number ${number} was banned for violation. I apologize and request one more chance.`;
+    }
+
+    if (prompt.includes("Prompt 6")) {
+        message = `WhatsApp Team, my number ${number} is banned. This is my final request, please unban my account.`;
+    }
+
+    document.getElementById("result").innerText = message;
 }
 </script>
 
