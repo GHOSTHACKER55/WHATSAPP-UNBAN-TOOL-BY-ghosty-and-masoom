@@ -1,165 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ghosty WhatsApp Unban Tool</title>
-
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        background: linear-gradient(135deg, #0a0f24, #14203b, #0e1a33);
-        background-size: cover;
-        color: white;
-        padding: 20px;
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Ghosty — WhatsApp Normal Unban Reporter</title>
+  <style>
+    :root{
+      --card-bg: rgba(255,255,255,0.06);
+      --accent: #3ea8ff;
+      --btn: #1877f2;
+      --text: #eaf2ff;
+      --muted: rgba(255,255,255,0.7);
+      --green: #28a745;
+      --radius: 12px;
     }
 
-    .container {
-        max-width: 500px;
-        margin: auto;
-        background: rgba(255,255,255,0.08);
-        padding: 20px;
-        border-radius: 12px;
-        box-shadow: 0 0 15px rgba(0,0,0,0.4);
+    /* Shiny blue gradient background */
+    body{
+      margin:0;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color:var(--text);
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(62,168,255,0.12), transparent 10%),
+                  radial-gradient(1000px 500px at 90% 90%, rgba(45,120,255,0.10), transparent 10%),
+                  linear-gradient(135deg,#06122a 0%, #072a52 40%, #0b3f72 100%);
     }
 
-    h1 {
-        text-align: center;
-        color: #40a6ff;
+    .wrap{
+      width: 98%;
+      max-width: 640px;
+      padding: 28px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+      border-radius: 18px;
+      box-shadow: 0 10px 30px rgba(3,18,40,0.6);
+      border: 1px solid rgba(255,255,255,0.04);
+      backdrop-filter: blur(6px);
     }
 
-    label {
-        display: block;
-        margin-top: 15px;
-        font-weight: bold;
+    header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      margin-bottom:18px;
     }
 
-    input, select {
-        width: 100%;
-        padding: 12px;
-        margin-top: 6px;
-        border-radius: 8px;
-        border: none;
-        font-size: 16px;
+    .brand {
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+    .logo {
+      width:46px;
+      height:46px;
+      border-radius:10px;
+      background: linear-gradient(135deg,#4aa8ff,#1e6eff);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:800;
+      color:white;
+      box-shadow: 0 6px 18px rgba(30,110,255,0.18);
+      font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    h1{ margin:0; font-size:18px; color:var(--text); }
+    p.lead { margin:0; font-size:13px; color:var(--muted); }
+
+    .card {
+      background: var(--card-bg);
+      padding:18px;
+      border-radius: var(--radius);
+      margin-top: 6px;
     }
 
-    button {
-        margin-top: 20px;
-        padding: 14px;
-        width: 100%;
-        background: #40a6ff;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        font-size: 18px;
-        font-weight: bold;
-        cursor: pointer;
+    label{
+      display:block;
+      font-size:13px;
+      color:var(--muted);
+      margin-bottom:6px;
     }
 
-    button:hover {
-        opacity: 0.85;
+    input[type="text"], select {
+      width:100%;
+      padding:12px 14px;
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,0.06);
+      background: rgba(0,0,0,0.25);
+      color:var(--text);
+      font-size:15px;
+      outline:none;
+      box-sizing:border-box;
+    }
+    input[type="text"]::placeholder { color: rgba(255,255,255,0.35); }
+
+    .controls {
+      display:flex;
+      gap:12px;
+      margin-top:12px;
+      flex-wrap:wrap;
     }
 
-    .group-btn {
-        margin-top: 20px;
-        text-align: center;
+    .btn {
+      flex:1 1 48%;
+      padding:12px 14px;
+      border-radius:10px;
+      border:none;
+      font-weight:600;
+      font-size:15px;
+      cursor:pointer;
+      background: linear-gradient(180deg,var(--btn), #1366d8);
+      color:white;
+      box-shadow: 0 8px 18px rgba(19,103,224,0.18);
+    }
+    .btn:active{ transform: translateY(1px); }
+
+    .btn.secondary {
+      background: rgba(255,255,255,0.03);
+      color: var(--text);
+      border:1px solid rgba(255,255,255,0.04);
+      box-shadow: none;
     }
 
-    .group-btn a {
-        text-decoration: none;
-        padding: 12px 20px;
-        background: #28a745;
-        color: white;
-        border-radius: 8px;
-        font-size: 17px;
-        display: inline-block;
+    .btn.gmail {
+      background: linear-gradient(180deg,#d14836,#b33828);
+      box-shadow: 0 8px 18px rgba(209,72,54,0.14);
     }
 
-    .group-btn a:hover {
-        opacity: 0.85;
-    }
-</style>
-</head>
-
-<body>
-
-<div class="container">
-    <h1>Ghosty WhatsApp Unban Tool</h1>
-
-    <label>Your WhatsApp Number:</label>
-    <input type="text" id="number" placeholder="+923001234567">
-
-    <label>Select Unban Type:</label>
-    <select id="mode">
-        <option value="normal">Normal Unban</option>
-        <option value="permanent">Permanent Unban</option>
-    </select>
-
-    <label>Normal Unban Reports:</label>
-    <select id="prompt">
-        <option value="1">Normal Report 1</option>
-        <option value="2">Normal Report 2</option>
-        <option value="3">Normal Report 3</option>
-        <option value="4">Normal Report 4</option>
-        <option value="5">Normal Report 5</option>
-        <option value="6">Normal Report 6</option>
-    </select>
-
-    <button onclick="sendReport()">Generate & Send Report</button>
-
-    <div class="group-btn">
-        <a href="https://chat.whatsapp.com/CPQC5IGJA2m8iaOWOE8CAN?mode=hqrt1" target="_blank">
-            Join Our WhatsApp Group
-        </a>
-    </div>
-</div>
-
-<script>
-function sendReport() {
-    const number = document.getElementById("number").value.trim();
-    const mode = document.getElementById("mode").value;
-    const prompt = document.getElementById("prompt").value;
-
-    if (number === "") {
-        alert("Please enter your WhatsApp number.");
-        return;
+    .group {
+      margin-top:14px;
+      text-align:center;
     }
 
-    let message = "";
-
-    if (mode === "normal") {
-        switch(prompt) {
-            case "1":
-                message = `Hello WhatsApp Support, my number ${number} was mistakenly banned. Kindly review and restore my access. Thank you.`;
-                break;
-            case "2":
-                message = `Dear WhatsApp team, my account ${number} got banned accidentally. Please help me recover it.`;
-                break;
-            case "3":
-                message = `Hi, I believe my number ${number} was wrongly banned. Requesting a quick reactivation.`;
-                break;
-            case "4":
-                message = `I am facing an issue as my number ${number} is banned. Kindly verify and unban it.`;
-                break;
-            case "5":
-                message = `To WhatsApp Support: Please check number ${number}, it appears to be banned without reason.`;
-                break;
-            case "6":
-                message = `My number ${number} got banned but I have not violated any terms. Please reinstate access.`;
-                break;
-        }
-    } else {
-        message = `Dear WhatsApp Support Team,\n\nMy account ${number} is showing permanently banned. I request a review and restoration of my access.\nThank you.`;
+    .group a {
+      display:inline-block;
+      text-decoration:none;
+      padding:10px 16px;
+      border-radius:10px;
+      background:var(--green);
+      color:white;
+      font-weight:700;
+      box-shadow: 0 8px 18px rgba(40,167,69,0.14);
     }
 
-    const mailtoLink =
-        "https://mail.google.com/mail/?view=cm&fs=1&to=support@whatsapp.com"
-        + "&su=" + encodeURIComponent("Request to Unban WhatsApp Number")
-        + "&body=" + encodeURIComponent(message);
-
-    window.open(mailtoLink, "_blank");
-}
-</script>
-
-</body>
-</html>
+    .result {
+      margin-top:14px;
+      background: rgba(255,255,255,0.02);
+      padding:12px;
+      border-radius:10px;
+      font-size:14px;
+      color:var(--muted);
