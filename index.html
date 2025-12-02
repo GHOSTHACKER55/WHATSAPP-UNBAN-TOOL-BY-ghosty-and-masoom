@@ -69,6 +69,19 @@
 </head>
 <body>
 
+<!-- 🎵 BACKGROUND MUSIC AUTO-PLAY -->
+<audio id="bgmusic" autoplay loop>
+    <source src="VID-20251202-WA0226.mp4" type="audio/mp4">
+</audio>
+
+<script>
+// Mobile fix: music starts on first tap
+document.addEventListener("click", function () {
+    document.getElementById("bgmusic").play();
+});
+</script>
+<!-- 🎵 END BACKGROUND MUSIC -->
+
 <div class="container">
     <h1>Ghosty WhatsApp Unban Tool</h1>
 
