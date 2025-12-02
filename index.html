@@ -3,100 +3,131 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ghosty Unban Tool</title>
 
 <style>
     body {
-        background: #0d0d0d;
+        background: #000;
         font-family: Arial, sans-serif;
-        color: #ffffff;
+        color: #fff;
         padding: 20px;
+        text-align: center;
     }
 
     h1 {
-        text-align: center;
-        margin-bottom: 25px;
         font-size: 26px;
-        letter-spacing: 2px;
+        font-weight: bold;
+        margin-bottom: 25px;
+        letter-spacing: 1px;
     }
 
-    .container {
-        max-width: 420px;
-        margin: auto;
-        background: #1a1a1a;
-        padding: 25px;
+    .box {
+        background: #111;
+        padding: 20px;
         border-radius: 15px;
-        border: 1px solid #2a2a2a;
+        max-width: 500px;
+        margin: auto;
     }
 
     label {
         display: block;
+        text-align: left;
+        margin-bottom: 7px;
         font-size: 15px;
-        margin-bottom: 6px;
-        margin-top: 15px;
-        color: #cfcfcf;
+        opacity: 0.8;
     }
 
     select, input {
         width: 100%;
-        padding: 12px;
-        border-radius: 10px;
-        background: #2a2a2a;
-        border: 1px solid #3a3a3a;
+        background: #1b1b1b;
+        border: 1px solid #333;
         color: white;
-        font-size: 15px;
-        outline: none;
+        padding: 14px;
+        border-radius: 10px;
+        font-size: 16px;
+        margin-bottom: 20px;
     }
 
     select:focus, input:focus {
-        border-color: #5e8cff;
+        outline: none;
+        border-color: #555;
     }
 
     button {
         width: 100%;
-        background: #5e8cff;
-        color: white;
-        padding: 13px;
-        font-size: 16px;
-        margin-top: 22px;
+        padding: 14px;
         border: none;
         border-radius: 10px;
+        background: #444;
+        color: #fff;
+        font-size: 17px;
         cursor: pointer;
         font-weight: bold;
-        letter-spacing: 1px;
     }
 
-    button:hover {
-        background: #7aa1ff;
+    button:active {
+        opacity: 0.8;
+    }
+
+    .footer {
+        margin-top: 20px;
+        opacity: 0.7;
+        font-size: 14px;
+    }
+
+    .join-btn {
+        margin-top: 15px;
+        display: inline-block;
+        padding: 12px 20px;
+        background: #222;
+        border-radius: 8px;
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
     }
 </style>
-
 </head>
+
 <body>
 
 <h1>WHATSAPP UNBAN TOOL</h1>
 
-<div class="container">
+<div class="box">
 
     <label>Select Unban Option</label>
-    <select>
-        <option>Permanent Unban</option>
-        <option>Temporary Unban Appeal</option>
-        <option>Business Account Review</option>
+    <select id="unbanOption">
+        <option value="normal">Normal Unban</option>
+        <option value="permanent">Permanent Unban</option>
     </select>
 
     <label>Enter Your Number</label>
-    <input type="text" placeholder="+923001234567">
+    <input type="text" id="number" placeholder="+923001234567">
 
     <label>Select Prompt</label>
-    <select>
-        <option>Prompt 1: Account Review Request</option>
-        <option>Prompt 2: Mistaken Ban Appeal</option>
-        <option>Prompt 6: Final Chance Request</option>
+    <select id="prompt">
+        <option value="Prompt 1: Account Review Request">Prompt 1: Account Review Request</option>
+        <option value="Prompt 2: Mistaken Ban Appeal">Prompt 2: Mistaken Ban Appeal</option>
+        <option value="Prompt 3: First Appeal Request">Prompt 3: First Appeal Request</option>
+        <option value="Prompt 4: Strong Mistake Appeal">Prompt 4: Strong Mistake Appeal</option>
+        <option value="Prompt 5: Urgent Review Appeal">Prompt 5: Urgent Review Appeal</option>
+        <option value="Prompt 6: Final Chance Request">Prompt 6: Final Chance Request</option>
     </select>
 
-    <button>Send Unban Request</button>
+    <button onclick="sendUnban()">SEND UNBAN REQUEST</button>
 
 </div>
+
+<div class="footer">
+    DEVELOPED BY GHOSTY | © 2025 | ALL SYSTEMS OPERATIONAL
+</div>
+
+<a href="#" class="join-btn">JOIN OUR WHATSAPP CHANNEL</a>
+
+<script>
+function sendUnban() {
+    alert("Your unban request has been generated successfully!");
+}
+</script>
 
 </body>
 </html>
