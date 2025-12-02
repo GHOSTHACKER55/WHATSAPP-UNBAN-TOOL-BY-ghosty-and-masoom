@@ -3,120 +3,100 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ghosty Unban Tool</title>
 
 <style>
     body {
+        background: #0d0d0d;
         font-family: Arial, sans-serif;
-        background: #0a0d2d;
-        color: white;
+        color: #ffffff;
         padding: 20px;
-        text-align: center;
     }
 
     h1 {
-        color: #4aa8ff;
-        margin-bottom: 20px;
-        font-size: 32px;
-        text-transform: uppercase;
+        text-align: center;
+        margin-bottom: 25px;
+        font-size: 26px;
         letter-spacing: 2px;
     }
 
-    .box {
-        background: rgba(255,255,255,0.08);
-        padding: 20px;
-        border-radius: 12px;
-        width: 90%;
-        max-width: 480px;
+    .container {
+        max-width: 420px;
         margin: auto;
-        box-shadow: 0 0 18px rgba(0, 150, 255, 0.3);
+        background: #1a1a1a;
+        padding: 25px;
+        border-radius: 15px;
+        border: 1px solid #2a2a2a;
     }
 
-    input, select, button {
+    label {
+        display: block;
+        font-size: 15px;
+        margin-bottom: 6px;
+        margin-top: 15px;
+        color: #cfcfcf;
+    }
+
+    select, input {
         width: 100%;
         padding: 12px;
-        margin-top: 10px;
         border-radius: 10px;
-        border: none;
-        font-size: 16px;
+        background: #2a2a2a;
+        border: 1px solid #3a3a3a;
+        color: white;
+        font-size: 15px;
+        outline: none;
+    }
+
+    select:focus, input:focus {
+        border-color: #5e8cff;
     }
 
     button {
-        background: linear-gradient(90deg, #009dff, #006eff);
+        width: 100%;
+        background: #5e8cff;
         color: white;
-        font-weight: bold;
+        padding: 13px;
+        font-size: 16px;
+        margin-top: 22px;
+        border: none;
+        border-radius: 10px;
         cursor: pointer;
-        box-shadow: 0 0 15px rgba(0, 145, 255, 0.5);
+        font-weight: bold;
+        letter-spacing: 1px;
     }
 
     button:hover {
-        opacity: 0.9;
-    }
-
-    #result {
-        margin-top: 20px;
-        background: rgba(255,255,255,0.12);
-        padding: 15px;
-        border-radius: 8px;
-        white-space: pre-wrap;
-        display: none;
-        border-left: 3px solid #4aa8ff;
+        background: #7aa1ff;
     }
 </style>
 
 </head>
 <body>
 
-<h1>GHOSTY UNBAN TOOL</h1>
+<h1>WHATSAPP UNBAN TOOL</h1>
 
-<div class="box">
-    <label>Your WhatsApp Number:</label>
-    <input type="text" id="number" placeholder="+923001234567">
+<div class="container">
 
-    <label>Select Email to Send Appeal:</label>
-    <select id="email">
-        <option value="support@whatsapp.com">support@whatsapp.com</option>
-        <option value="Tonybeltonjn@gmail.com">Tonybeltonjn@gmail.com</option>
-        <option value="Ghostyhere532@gmail.com">Ghostyhere532@gmail.com</option>
-        <option value="Muyeti20@gmail.com">Muyeti20@gmail.com</option>
-        <option value="Hacker@gmail.com">Hacker@gmail.com</option>
-        <option value="Musa@gmail.com">Musa@gmail.com</option>
-        <option value="Ghost@gmail.com">Ghost@gmail.com</option>
+    <label>Select Unban Option</label>
+    <select>
+        <option>Permanent Unban</option>
+        <option>Temporary Unban Appeal</option>
+        <option>Business Account Review</option>
     </select>
 
-    <button onclick="generate()">GENERATE APPEAL</button>
+    <label>Enter Your Number</label>
+    <input type="text" placeholder="+923001234567">
 
-    <div id="result"></div>
+    <label>Select Prompt</label>
+    <select>
+        <option>Prompt 1: Account Review Request</option>
+        <option>Prompt 2: Mistaken Ban Appeal</option>
+        <option>Prompt 6: Final Chance Request</option>
+    </select>
+
+    <button>Send Unban Request</button>
+
 </div>
-
-<script>
-function generate() {
-    const number = document.getElementById("number").value.trim();
-    const email = document.getElementById("email").value;
-
-    if (number === "") {
-        alert("Please enter your number.");
-        return;
-    }
-
-    const text = 
-`To: ${email}
-
-Subject: Request to Unban My WhatsApp Number
-
-Hello WhatsApp Support Team,
-
-My WhatsApp account ${number} has been banned.
-I believe this may be a mistake. Please review my account and unban it.
-
-Thank you,
-Ghosty Unban Tool User`;
-
-    const resultBox = document.getElementById("result");
-    resultBox.style.display = "block";
-    resultBox.textContent = text;
-}
-</script>
 
 </body>
 </html>
