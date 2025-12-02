@@ -1,144 +1,161 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ghosty Unban Tool</title>
-
-<style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ghosty WhatsApp Unban / Report Tool</title>
+  <style>
     body {
-        font-family: Arial, sans-serif;
-        background: #081120;
-        color: #fff;
-        text-align: center;
-        padding: 20px;
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      color: #333;
+      padding: 20px;
     }
-
+    .container {
+      max-width: 500px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
     h1 {
-        font-size: 26px;
-        margin-bottom: 20px;
-        color: #4aa8ff;
+      text-align: center;
+      color: #333;
     }
-
-    .box {
-        background: rgba(255,255,255,0.07);
-        padding: 20px;
-        border-radius: 14px;
-        width: 90%;
-        max-width: 450px;
-        margin: auto;
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
     }
-
-    input {
-        width: 100%;
-        padding: 12px;
-        margin-top: 10px;
-        border-radius: 8px;
-        border: none;
-        font-size: 16px;
+    input[type="text"], select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-size: 16px;
     }
-
-    .btn {
-        width: 100%;
-        padding: 12px;
-        background: #3d8bff;
-        border: none;
-        color: #fff;
-        border-radius: 8px;
-        margin-top: 10px;
-        font-size: 16px;
-        cursor: pointer;
-        font-weight: bold;
+    button {
+      margin-top: 15px;
+      padding: 12px;
+      width: 100%;
+      background: #4aa8ff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
     }
-
-    .btn:hover {
-        opacity: 0.85;
+    button:hover {
+      opacity: 0.9;
     }
-
-    #output {
-        background: rgba(255,255,255,0.1);
-        margin-top: 20px;
-        padding: 15px;
-        border-radius: 10px;
-        white-space: pre-wrap;
-        display: none;
+    #result {
+      margin-top: 20px;
+      background: #eaeaea;
+      padding: 15px;
+      border-radius: 4px;
+      white-space: pre-wrap;
+      display: none;
     }
-</style>
+    .group-btn {
+      margin-top: 10px;
+      text-align: center;
+    }
+    .group-btn a {
+      text-decoration: none;
+      padding: 10px 20px;
+      background: #28a745; /* green */
+      color: white;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+    .group-btn a:hover {
+      opacity: 0.9;
+    }
+  </style>
 </head>
 <body>
 
-<h1>Ghosty Normal Unban Tool</h1>
+<div class="container">
+  <h1>Ghosty WhatsApp Unban / Report Tool</h1>
 
-<div class="box">
-    <input type="text" id="userNumber" placeholder="Enter Your WhatsApp Number (e.g. +923001234567)">
+  <label>Your WhatsApp Number:</label>
+  <input type="text" id="number" placeholder="+923001234567" />
 
-    <button class="btn" onclick="gen1()">Normal Unban - Report 1</button>
-    <button class="btn" onclick="gen2()">Normal Unban - Report 2</button>
-    <button class="btn" onclick="gen3()">Normal Unban - Report 3</button>
-    <button class="btn" onclick="gen4()">Normal Unban - Report 4</button>
-    <button class="btn" onclick="gen5()">Normal Unban - Report 5</button>
-    <button class="btn" onclick="gen6()">Normal Unban - Report 6</button>
+  <label>Select Mode:</label>
+  <select id="mode">
+    <option value="normal">Normal Unban / Report</option>
+    <option value="permanent">Permanent Unban / Report</option>
+  </select>
+
+  <label>Select Report Prompt (if Normal):</label>
+  <select id="prompt">
+    <option value="1">Prompt 1</option>
+    <option value="2">Prompt 2</option>
+    <option value="3">Prompt 3</option>
+    <option value="4">Prompt 4</option>
+    <option value="5">Prompt 5</option>
+    <option value="6">Prompt 6</option>
+  </select>
+
+  <button onclick="generateReport()">Generate Report</button>
+
+  <div id="result"></div>
+
+  <div class="group-btn">
+    <a href="https://chat.whatsapp.com/CPQC5IGJA2m8iaOWOE8CAN?mode=hqrt1" target="_blank">
+      Join our WhatsApp Group
+    </a>
+  </div>
 </div>
 
-<div id="output"></div>
-
 <script>
-function getNumber() {
-    let num = document.getElementById("userNumber").value.trim();
-    if (num === "") {
-        alert("Please enter your WhatsApp number.");
-        return null;
+  function generateReport() {
+    const number = document.getElementById('number').value.trim();
+    const mode = document.getElementById('mode').value;
+    const promptIndex = document.getElementById('prompt').value;
+
+    if (!number) {
+      alert('Please enter your number.');
+      return;
     }
-    return num;
-}
 
-function show(text) {
-    let box = document.getElementById("output");
-    box.style.display = "block";
-    box.textContent = text;
-}
+    let message = '';
 
-// REPORT 1
-function gen1() {
-    let num = getNumber();
-    if (!num) return;
-    show(`Hello WhatsApp Support, my number ${num} was mistakenly banned. Kindly review and restore my access. Thank you.`);
-}
+    if (mode === 'normal') {
+      switch(promptIndex) {
+        case '1':
+          message = `Hello WhatsApp Support, my number ${number} was mistakenly banned. Kindly review and restore my access. Thank you.`;
+          break;
+        case '2':
+          message = `Dear WhatsApp team, my account ${number} got banned accidentally. Please help me recover it.`;
+          break;
+        case '3':
+          message = `Hi, I believe my number ${number} was wrongly banned. Requesting a quick reactivation.`;
+          break;
+        case '4':
+          message = `I am facing an issue as my number ${number} is banned. Kindly verify and unban it.`;
+          break;
+        case '5':
+          message = `To WhatsApp Support: Please check number ${number}, it appears to be banned without reason.`;
+          break;
+        case '6':
+          message = `My number ${number} got banned but I have not violated any terms. Please reinstate access.`;
+          break;
+        default:
+          message = '';
+      }
+    } else if (mode === 'permanent') {
+      message = `Dear WhatsApp Support Team,\n\nMy account ${number} is showing as permanently banned. I request you to kindly re-evaluate and restore my access if possible. Thank you.`;
+    }
 
-// REPORT 2
-function gen2() {
-    let num = getNumber();
-    if (!num) return;
-    show(`Dear WhatsApp team, my account ${num} got banned accidentally. Please help me recover it.`);
-}
-
-// REPORT 3
-function gen3() {
-    let num = getNumber();
-    if (!num) return;
-    show(`Hi, I believe my number ${num} was wrongly banned. Requesting a quick reactivation.`);
-}
-
-// REPORT 4
-function gen4() {
-    let num = getNumber();
-    if (!num) return;
-    show(`I am facing an issue as my number ${num} is banned. Kindly verify and unban it.`);
-}
-
-// REPORT 5
-function gen5() {
-    let num = getNumber();
-    if (!num) return;
-    show(`To WhatsApp Support: Please check number ${num}, it appears to be banned without reason.`);
-}
-
-// REPORT 6
-function gen6() {
-    let num = getNumber();
-    if (!num) return;
-    show(`My number ${num} got banned but I have not violated any terms. Please reinstate access.`);
-}
+    const resultBox = document.getElementById('result');
+    resultBox.style.display = 'block';
+    resultBox.textContent = message;
+  }
 </script>
 
 </body>
